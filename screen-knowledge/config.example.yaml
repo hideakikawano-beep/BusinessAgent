@@ -1,0 +1,81 @@
+# ScreenKnowledge 設定ファイル
+# 初回起動時に ~/ScreenKnowledge/config.yaml へコピーされます。
+# 設定キーの詳細は docs/03-data-model.md を参照。
+
+language: ja
+
+capture:
+  interval_seconds: 30          # 通常時のキャプチャ間隔
+  marked_interval_seconds: 5    # 「マニュアル化マーク」中の間隔（手順を細かく記録）
+  on_window_change: true        # アクティブウィンドウ切替時にも撮影
+  window_change_debounce_s: 3   # 高速なウィンドウ切替の連打防止
+  idle_pause_after_s: 300       # この秒数入力がなければ撮影停止（会議アプリ表示中は除く）
+  store_long_edge_px: 2000      # 保存時の長辺最大ピクセル（Retina等の巨大画像を縮小）
+
+dedupe:
+  phash_threshold: 8            # 前回保存画像とのpHash距離がこれ以下なら画像は保存しない
+  marked_phash_threshold: 4     # マーク中はより細かく保存
+  force_keyframe_s: 300         # 変化がなくてもこの間隔で必ず1枚保存（記録の空白防止）
+
+exclude:
+  # ここに載ったアプリ/タイトルはメタデータのみ記録し、画像は一切保存しない
+  apps: ["1Password", "KeePass", "Bitwarden", "LastPass"]
+  title_keywords: ["パスワード", "password", "秘密", "給与", "マイナンバー", "banking", "口座"]
+
+meeting:
+  # 会議中は毎フレーム変化して画像が溢れるため低頻度キャプチャに切替
+  apps: ["zoom.us", "Zoom", "Microsoft Teams"]
+  title_keywords: ["Meet", "Webex"]
+  capture_interval_s: 300
+
+session:
+  gap_s: 120                    # 無記録がこの秒数を超えたらセッションを区切る
+  interruption_tolerance_s: 60  # 別アプリへの一時的な離脱をこの秒数まで同一セッションに吸収
+
+retention:
+  screenshot_days: 30           # 生スクリーンショットの保持日数（超過分は自動削除）
+  frame_metadata_days: 180      # フレームメタデータの保持日数
+  max_disk_gb: 10               # shots/ の合計サイズ上限（超過時は古い順に削除）
+
+hotkey:
+  enabled_windows: true         # Win: 追加権限なしで動作
+  enabled_macos: false          # mac: アクセシビリティ権限が必要なため既定OFF（トレイメニューで代替）
+  combo: "<ctrl>+<alt>+m"       # 「今の作業をマニュアル化」トグル
+
+api:
+  key_source: keyring           # keyring | env | config （env は ANTHROPIC_API_KEY を参照）
+  api_key: ""                   # key_source: config の場合のみ（非推奨・平文保存）
+  analysis_model: claude-haiku-4-5    # セッション解析（画像入力・低コスト）
+  synthesis_model: claude-sonnet-5    # マニュアル・日次ログの文章生成
+  api_image_long_edge_px: 1024  # API送信前のダウンスケール（コスト・機密面）
+  max_images_per_session: 12    # 1セッションの解析に使うキーフレーム上限
+  pricing:                      # USD / 1Mトークン。料金改定時はここを更新（実装時に要確認）
+    claude-haiku-4-5: { input: 1.0, output: 5.0 }
+    claude-sonnet-5: { input: 3.0, output: 15.0 }   # 〜2026-08-31は導入価格 2.0/10.0
+  batch_discount: 0.5           # Batch API利用時の割引率
+
+analysis:
+  mode: nightly_batch           # nightly_batch（推奨・50%割引） | realtime（都度通常API）
+  nightly_at: "22:00"           # 夜間バッチの提出時刻
+  batch_poll_minutes: 15        # バッチ結果のポーリング間隔
+  batch_fallback_after_h: 6     # バッチ未完了がこの時間を超え、かつPC稼働中なら通常APIに切替
+  min_session_ticks: 3          # これ未満の短いセッションは解析しない
+
+budget:
+  monthly_usd: 25               # 月次上限。超過すると解析を停止（キャプチャは継続・翌月再開）
+  warn_ratio: 0.8               # 上限の80%でトレイに警告表示
+  daily_stored_frames_cap: 1500 # 1日の画像保存枚数上限（暴走防止）
+
+viewer:
+  port: 8756
+  allow_lan: false              # trueにしない限り 127.0.0.1 のみバインド
+
+integrations:
+  notion:
+    enabled: false              # Phase 5: 完成マニュアルのみNotionへ同期
+    token: ""
+    manuals_database_id: ""
+  slack:
+    enabled: false              # Phase 5: 日次ログをSlackに投稿
+    webhook_url: ""
+    post_at: "09:00"

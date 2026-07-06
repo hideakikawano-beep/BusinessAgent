@@ -50,6 +50,10 @@ coo の視点で、この値引き要求を受けるべきか判断して
 Q2の営業成績をHubSpotのデータから報告して   → sales-director がレポートを生成
 ```
 
+## PC作業の自動ナレッジ化ツール（screen-knowledge）
+
+[`screen-knowledge/`](screen-knowledge/) に、PC作業のスクリーンショットからオペレーションマニュアル・ナレッジ・日次作業ログを自動構築するローカルツールの設計ドキュメントと開発環境があります。開発はフェーズ単位でClaude Code（Opus等）に依頼する構成です。概要と進め方は [screen-knowledge/README.md](screen-knowledge/README.md) を参照してください。
+
 ## エージェントのカスタマイズ
 
 各エージェントの知識や行動原則は `.claude/agents/` 配下のMarkdownファイルを編集することで調整できます。実際の商談や社内ルールに合わせて、以下のような情報を追記していくと精度が上がります。

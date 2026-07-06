@@ -18,3 +18,9 @@ NottaのBtoB営業推進のための役割別エージェント環境。ユー�
 - Nottaは AI音声認識・文字起こしSaaS。多言語対応、Web会議連携（Zoom / Google Meet / Microsoft Teams / Webex）、AI要約が主な機能
 - BtoB営業の主戦場は日本市場。稟議文化・セキュリティ審査・比較検討といった日本企業の商習慣を前提とする
 - 製品の具体的な仕様・価格は変動するため、断定が必要な場合は「要確認」と明示し、公式情報の確認を促す
+
+## screen-knowledge サブプロジェクト
+
+- `screen-knowledge/` はPC作業の自動ナレッジ化ツール（Pythonプロジェクト）の設計・開発ディレクトリ
+- この配下の作業では `screen-knowledge/CLAUDE.md` の規約が優先される
+- 「Phase N を実装して」等の開発依頼を受けたら、まず `screen-knowledge/CLAUDE.md` → `screen-knowledge/docs/02-architecture.md` → 該当フェーズのdocの順に読むこと

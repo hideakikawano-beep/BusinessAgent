@@ -4,6 +4,8 @@
 
 ## Phase 1: キャプチャ基盤
 
+> 自動テスト（`uv run pytest`）39件パス済み（config/db/dedupe/daemon/storage、フェイクアダプタでCI相当・GUI/権限不要）。`uv run ruff check` クリーン。以下は自動テストで代替できない実機項目。
+
 ### 共通
 - [ ] `uv sync` がクリーンな環境で完了する（コンパイラ不要・wheelのみ）
 - [ ] `sk start` でトレイ/メニューバーにアイコンが出る

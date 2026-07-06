@@ -75,4 +75,16 @@ def logs_dir() -> Path:
 
 def ensure_layout() -> None:
     """Create the directory skeleton (idempotent). Called by `sk start`."""
-    raise NotImplementedError("Phase 1")
+    for d in (
+        root(),
+        db_file().parent,
+        shots_dir(),
+        vault_dir(),
+        manuals_dir(),
+        manuals_dir() / "assets",
+        manuals_dir() / ".history",
+        knowledge_dir(),
+        daily_dir(),
+        logs_dir(),
+    ):
+        d.mkdir(parents=True, exist_ok=True)

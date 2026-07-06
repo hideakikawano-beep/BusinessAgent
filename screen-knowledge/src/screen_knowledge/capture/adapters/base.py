@@ -25,7 +25,7 @@ class WindowInfo:
 
 @dataclass
 class Capture:
-    image: "PIL.Image.Image"
+    image: PIL.Image.Image
     monitor_index: int
     physical_scale: float  # logical->physical px ratio (Retina etc.)
 
@@ -77,6 +77,10 @@ class TrayAdapter(Protocol):
 
     def update_status(self, text: str) -> None:
         """Update the status line (state / today's count / monthly cost)."""
+        ...
+
+    def stop(self) -> None:
+        """Stop the tray event loop so run() returns (called on quit)."""
         ...
 
 

@@ -28,9 +28,9 @@ dependencies = [
     # OS別 (Windows)
     "pywin32; sys_platform == 'win32'",
     "pystray; sys_platform == 'win32'",
-    # OS別 (macOS)
+    # OS別 (macOS)  — AppKit/NSWorkspace ships in the Cocoa framework package
     "pyobjc-framework-Quartz; sys_platform == 'darwin'",
-    "pyobjc-framework-AppKit; sys_platform == 'darwin'",
+    "pyobjc-framework-Cocoa; sys_platform == 'darwin'",
     "rumps; sys_platform == 'darwin'",
 ]
 

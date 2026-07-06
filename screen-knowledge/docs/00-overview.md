@@ -50,7 +50,7 @@
 
 | フェーズ | 状態 | ゴール | doc |
 |---|---|---|---|
-| Phase 1 キャプチャ基盤 | 未着手 | 安全に記録できる | docs/10 |
+| Phase 1 キャプチャ基盤 | 実装済み（コア実装＋ユニットテスト39件・要実機検証） | 安全に記録できる | docs/10 |
 | Phase 2 セッション化+解析+日次ログ | 未着手 | 「今日何をしたか」が毎朝手に入る | docs/11 |
 | Phase 3 ナレッジビルダー | 未着手 | スクショ付きマニュアル自動生成 | docs/12 |
 | Phase 4 検索・閲覧UI | 未着手 | いつでも検索・取り出せる | docs/13 |
@@ -66,9 +66,9 @@
 | 2 | pyobjcの `CGPreflightScreenCaptureAccess` / `CGRequestScreenCaptureAccess` の正確なシンボル名 | Phase 1実装時にmac実機 | 未確認 |
 | 3 | macOS TCC権限がvenv再構築で失効する挙動（Pythonバイナリ単位の付与） | Phase 1実装時にmac実機 | 未確認 |
 | 4 | Windows `SetProcessDpiAwarenessContext(PER_MONITOR_AWARE_V2)` のビルド別可用性（フォールバック: `SetProcessDpiAwareness(2)`） | Phase 1実装時にWin実機 | 未確認 |
-| 5 | uv同梱Python(3.12)のSQLiteがFTS5+trigram対応か（SQLite≥3.34） | `sk doctor` 実装時に両OS | 未確認 |
+| 5 | uv同梱Python(3.12)のSQLiteがFTS5+trigram対応か（SQLite≥3.34） | `sk doctor` 実装時に両OS | CPython 3.12.3(Linux/uv)で対応を確認済み。Win/mac実機は要確認 |
 | 6 | 画像トークン計算式 `(w×h)/750` と対象モデルの最大解像度 | Phase 2実装時にcount_tokens実測 | 未確認 |
-| 7 | 全依存パッケージのwheel提供（Win11 x64 / macOS arm64でコンパイラ不要か） | Phase 1で `uv sync` スモーク | 未確認 |
+| 7 | 全依存パッケージのwheel提供（Win11 x64 / macOS arm64でコンパイラ不要か） | Phase 1で `uv sync` スモーク | Linuxで`uv sync`成功（OS別依存はマーカーで分岐）。Win/mac実機は要確認 |
 | 8 | Anthropic APIのデータ保持・学習利用ポリシーと社内規定の整合 | **ユーザー自身が社内確認**（docs/01チェックリスト） | 未確認 |
 | 9 | macOSホットキーのアクセシビリティ不要な代替（`quickmachotkey` = Carbon RegisterEventHotKey） | Phase 3実装時 | 未確認 |
 | 10 | 自動起動の詳細（Win: schtasks or スタートアップ / mac: launchd plist） | Phase 1実装時 | 未確認 |
